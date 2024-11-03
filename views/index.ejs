@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: white;">
+    <a href="/"><button href="/" class="button__countries">Countries</button></a>
+    <a href="/countries"><button class="button__charts">Charts</button></a>
+    
+    <% if (locals.countriesMain) { %>
+        <h2><%= countriesMain %></h2>
+        <form action="/countries/charts" class="form" method="post">
+        <select name="fields" id="" class="endPoint__dropdown">
+            <option name ="" class="dropdown__choice"></option>
+            <option name ="lang" class="dropdown__choice">Languages</option>
+            <option name ="population" class="dropdown__choice">Population</option>
+            <option name ="currencies" class="dropdown__choice">Currencies</option>
+            <option name ="region" class="dropdown__choice">Region</option>
+        </select>
+        <button type="submit" class="form__submit">Go</button>
+    </form>
+    <% } else if (locals.chartsData) { %>
+        <section class="chart__template">
+            
+                <% const sortedChart = Object.fromEntries(Object.entries(chartsData).sort(([, a], [, b]) => b - a)) %>
+             <div><%= console.log(sortedChart) %></div>
+              <% const chartsValueData = Object.values(sortedChart) %>
+              <% const chartsValuePercentage = chartsValueData.map((value) => (value / chartsValueData[0]) * 100) %>
+        </section>
+        
+        <%} else if (locals.countryData) { %>
+    
+        
+            <section id="cards" class="template__cards"></section>
+            
+            <% countryData.forEach((element) => { %>
+                
+                <div class="countryData__displayBox">
+                    <img src="<%= element['flags'].svg %>" alt="<%= element['flags'].alt %>" class="countryData__flags">
+                    <img src="<%= element['coatOfArms'].svg %>" alt="" class="countryData__coatOfArms">
+                    <h5 class="countryData__flagInitials"><%= element['flag'] %></h5>
+                    <h5 class="countryData__timeZone">Timezone: <%= element['timezones'] %></h5>
+                    <div class="countryData__currency">Currency:
+                        
+                        <% const currencyArr = Object.entries(element['currencies']) %>
+                        <% currencyArr.forEach((currencyElement) => { %>
+                            <div><%= currencyElement[0] %></div>
+                            <div><%= currencyElement[1].name %></div>
+                            <div><%= currencyElement[1].symbol %></div>
+                        <% }) %>
+                    <div>
+                    
+                    <div class="countryData__languages">Languages:
+                        <% const langArr = Object.values(element['languages']) %>
+                        <% langArr.forEach((langElement) => { %>
+                            <div><%= langElement %></div>
+                            <% }) %>
+                    </div>
+                </div>
+                
+                <h2 class="countryData__name"><%= element['name'].common %></h2>
+                
+                <h3 class="countryData__official"><%= element['name'].official %></h3>
+                
+                <h4 class="countryData__capital">Capital: <%= element['capital'] %></h4>
+                
+                <p><%= element['name'].common %> is in <%= element['subregion'] %>, <%= element['region'] %>.
+                It's population consists of <%= element['population'] %> people. It is <%= element['area'] %>km2 large.
+                Car license plates are indicated with <%= element['car'].signs %> and usually people drive on the <%= element['car'].side %> side of the road.</p>
+
+                    <% if (element['independent']) { %>
+                        <div class="countryData__independent"><%= element['name'].common %> is independent</div>
+                    <% } else { %>
+                    <div class="countryData__independent"><%= element['name'].common %> is occupied</div>
+                    <% } %>
+            <% }) %>
+
+
+        <% } else if (locals.data) { %>
+            <section id="cards" class=""></section>
+            <% const countryNameArray = [] %>
+            <% locals.data.forEach((element) => { %>
+                <% countryNameArray.push(element['name'].common) %>
+           <%  }) %>
+           <% countryNameArray.sort() %>
+           <% countryNameArray.forEach((element) => { %>
+            <a href="/country?name=<%= element %>" class="countryName"><%= element %></a>
+           <% }) %>
+            <% } %>
+        </section>
+</body>
+</html>
