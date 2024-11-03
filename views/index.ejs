@@ -21,13 +21,15 @@
         </select>
         <button type="submit" class="form__submit">Go</button>
     </form>
-    <% } else if (locals.chartsData) { %>
+    <% } else if (locals.chartsData && locals.chartsPercentage && locals.chartsNames) { %>
         <section class="chart__template">
-            
-                <% const sortedChart = Object.fromEntries(Object.entries(chartsData).sort(([, a], [, b]) => b - a)) %>
-             <div><%= console.log(sortedChart) %></div>
-              <% const chartsValueData = Object.values(sortedChart) %>
-              <% const chartsValuePercentage = chartsValueData.map((value) => (value / chartsValueData[0]) * 100) %>
+            <div class="chart__Names"><%= chartsNames %></div>
+            <div class="chart__Bars">
+                <% for ( let i = 0; i < chartsPercentage.length; i++ ) { %>
+                    <div class="bar"><%= chartsPercentage[i] %></div>
+                <% } %>
+                <div class="charts__Data"><%= chartsData %></div>
+            </div>              
         </section>
         
         <%} else if (locals.countryData) { %>

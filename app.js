@@ -115,11 +115,23 @@ app.post("/countries/charts", async (req, res) => {
             regions[count] = (regions[count] || 0) + 1;
             return regions
           }, {});
-          console.log(regionsCount)
+
+
+          // Sort
+
+          const regionSorted = Object.fromEntries(Object.entries(regionsCount).sort(([, a], [, b]) => b - a))
+
+
+          // Retrieve values, keys and calculate percentage create output
+
+          const outputRegCount = Object.values(regionSorted);
+          const outputReg = Object.keys(regionSorted);
+          const outputRegPercentage = outputRegCount.map((value) => Number.parseFloat((value / outputRegCount[0]) * 100).toFixed(2));
+
           
           // Render data to front
           
-          res.render("index.ejs", {chartsData: regionsCount})
+          res.render("index.ejs", {chartsData: outputRegCount, chartsName: outputReg, chartsPercentage: outputRegPercentage,})
         
         
         
@@ -148,7 +160,7 @@ app.post("/countries/charts", async (req, res) => {
             };
           });
           
-         // filter out the desired data 
+         // filter out the symbols
           
          const currencySymbol = [];
 
@@ -163,8 +175,17 @@ app.post("/countries/charts", async (req, res) => {
             symbols[count] = (symbols[count] || 0) + 1;
             return symbols
           }, {});
-
-          res.render("index.ejs", {chartsData: currencySymbolCount})
+          // Sort
+          const currencySymbolCountSorted = Object.fromEntries(Object.entries(currencySymbolCount).sort(([, a], [, b]) => b - a))
+          
+          //Retrieve values, keys, calculate percentage and create output  
+        
+          const outputSymbCount = Object.values(currencySymbolCountSorted).slice(0, 10);
+          const outputSymb = Object.keys(currencySymbolCountSorted).slice(0, 10);
+          const outputSymbPercentage = outputSymbCount.map((value) => Number.parseFloat((value / outputSymbCount[0]) * 100).toFixed(2));
+          
+          ////// Render
+          res.render("index.ejs", {chartsData: outputSymbCount, chartsPercentage: outputSymbPercentage, chartsNames: outputSymb})
         }
 
         
