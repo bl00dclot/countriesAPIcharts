@@ -2,7 +2,6 @@ import express from "express";
 import bodyParser from "body-parser";
 import morgan from "morgan";
 import axios from "axios";
-import exp from "constants";
 
 
 const url = "https://restcountries.com/v3.1/";
@@ -99,6 +98,12 @@ app.post("/countries/charts", async (req, res) => {
           
     if (chartField == "Region") {
 
+
+      const chartsText = {
+        headline: `Countries in ${chartField}`,
+        legend: `Amount of countries in ${chartField}`,
+      };
+
       // get API
       const response = await axios.get(url + `all`);
          
@@ -131,7 +136,7 @@ app.post("/countries/charts", async (req, res) => {
           
           // Render data to front
           
-          res.render("index.ejs", {chartsData: outputRegCount, chartsName: outputReg, chartsPercentage: outputRegPercentage,})
+          res.render("index.ejs", {chartsData: outputRegCount, chartsNames: outputReg, chartsPercentage: outputRegPercentage, chartsText,})
         
         
         
@@ -139,6 +144,11 @@ app.post("/countries/charts", async (req, res) => {
         
         
         } else if (chartField == "Currencies") {
+
+          const chartsText = {
+            headline: chartField,
+            legend: `Used by countries`,
+          };
           
           // get API
 
@@ -185,7 +195,7 @@ app.post("/countries/charts", async (req, res) => {
           const outputSymbPercentage = outputSymbCount.map((value) => Number.parseFloat((value / outputSymbCount[0]) * 100).toFixed(2));
           
           ////// Render
-          res.render("index.ejs", {chartsData: outputSymbCount, chartsPercentage: outputSymbPercentage, chartsNames: outputSymb})
+          res.render("index.ejs", {chartsData: outputSymbCount, chartsPercentage: outputSymbPercentage, chartsNames: outputSymb, chartsText})
         }
 
         

@@ -1,0 +1,159 @@
+/* Reset */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+button {
+    border: initial;
+    background-color: initial;
+    color: inherit;
+    font: inherit;
+    outline: none; /* make visual indicator for focus states */
+}
+a, a:link, a:visited, a:hover, a:active{
+    text-decoration: none;
+    color: inherit;
+    outline: none;
+}
+/* KEYFRAMES */
+
+
+
+@-webkit-keyframes HeaderAnimationFadeInOut {
+    0%{background-position:0% 51%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 51%}
+}
+@-moz-keyframes HeaderAnimationFadeInOut {
+    0%{background-position:0% 51%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 51%}
+}
+@keyframes HeaderAnimationFadeInOut {
+    0%{background-position:0% 51%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 51%}
+}
+
+/* BASE STYLES */
+
+
+
+                /* MAIN PAGE */
+
+body {
+    background-color:ghostwhite;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.header{
+    padding: 5px;
+    height: 55px;
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(269deg, #ffffff, #7eadee);
+    background-size: 400% 400%;
+
+    -webkit-animation: HeaderAnimationFadeInOut 4s ease infinite;
+    -moz-animation: HeaderAnimationFadeInOut 4s ease infinite;
+    animation: HeaderAnimationFadeInOut 4s ease infinite;
+}
+
+.button__{
+    font-weight: 600;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.button__:hover, .button__:focus {
+    transform: scale(1.13);
+    text-shadow: 5px 5px 5px #7eadee, -5px -5px 5px #fff, -5px 5px 5px #7eadee, 5px -5px 5px #fff;
+    outline: none;
+}
+.countriesDisplayMain__section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.countriesDisplayMain__grid {
+    margin-top: 20px;
+    width: 75%;
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    gap: 10px;
+}
+
+.countryName {
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    padding: 5px;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    transition: all 0.2s;
+}
+.countryName:hover, .countryName:focus {
+    transform: scale(1.22);
+    outline:none;
+    
+}
+
+
+                /* Country Data Page */
+
+.template__cards {
+    display: flex;
+}
+
+.countryData__displayBox {
+    display: flex;
+}
+countryData__displayInfo {
+    display:flex;
+}
+
+.countryData__flags {
+    width: 300px;
+}
+
+.countryData__coatOfArms {
+    width: 300px;
+}
+
+.countryData__flagInitials {
+
+}
+
+.countryData__timeZone {
+
+}
+
+.countryData__currency {
+
+}
+
+.countryData__languages {
+
+}
+
+.countryData__name {
+
+}
+
+.countryData__official {
+
+}
+
+.countryData__capital {
+
+}
+
+.countryData__paragraph {
+
+}

@@ -3,13 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Country Statistics</title>
+
 </head>
-<body style="background-color: white;">
-    <a href="/"><button href="/" class="button__countries">Countries</button></a>
-    <a href="/countries"><button class="button__charts">Charts</button></a>
+<body>
+    <header class="header">
+        <a href="/"><button href="/" class="button__">Countries</button></a>
+        <img src="svg/stats.svg" alt="Caligraphy style logo">
+        <a href="/countries"><button class="button__">Charts</button></a>
+    </header>
+    
+    
+    
+    
+    
     
     <% if (locals.countriesMain) { %>
+
+                <!-- Chart route page -->
+
         <h2><%= countriesMain %></h2>
         <form action="/countries/charts" class="form" method="post">
         <select name="fields" id="" class="endPoint__dropdown">
@@ -21,21 +35,65 @@
         </select>
         <button type="submit" class="form__submit">Go</button>
     </form>
+    
+    
+    
+    
+    
     <% } else if (locals.chartsData && locals.chartsPercentage && locals.chartsNames) { %>
-        <section class="chart__template">
-            <div class="chart__Names"><%= chartsNames %></div>
-            <div class="chart__Bars">
-                <% for ( let i = 0; i < chartsPercentage.length; i++ ) { %>
-                    <div class="bar"><%= chartsPercentage[i] %></div>
-                <% } %>
-                <div class="charts__Data"><%= chartsData %></div>
-            </div>              
-        </section>
+
+
+        <!-- // Chart template -->
+
+        <canvas id="chart"></canvas>
+        <script>
+            const ctx = document.getElementById('chart').getContext('2d');
+            const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+            labels: <%- JSON.stringify(chartsNames) %>,
+            datasets: [{
+            label: <%- JSON.stringify(locals.chartsText['legend']) %>,
+            data: <%- JSON.stringify(chartsData) %>,
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            elements: {
+                bar: {
+                    borderWidth: 2,
+                },
+            responsive: true,
+            },
+            plugins: {
+      legend: {
+        position: 'right',
+      },
+      title: {
+        display: true,
+        text: <%- JSON.stringify(locals.chartsText['headline']) %>
+      }
+    },
+            scales: {
+            y: {
+                beginAtZero: true
+            }
+            }
+        }
+        });
+        </script>
+        
+        
+        
         
         <%} else if (locals.countryData) { %>
     
+            <!-- // Chosen country template -->
         
-            <section id="cards" class="template__cards"></section>
+        <section id="cards" class="template__cards">
             
             <% countryData.forEach((element) => { %>
                 
@@ -52,7 +110,7 @@
                             <div><%= currencyElement[1].name %></div>
                             <div><%= currencyElement[1].symbol %></div>
                         <% }) %>
-                    <div>
+                        </div>
                     
                     <div class="countryData__languages">Languages:
                         <% const langArr = Object.values(element['languages']) %>
@@ -61,6 +119,8 @@
                             <% }) %>
                     </div>
                 </div>
+
+            <div class="countryData__displayInfo">
                 
                 <h2 class="countryData__name"><%= element['name'].common %></h2>
                 
@@ -68,29 +128,41 @@
                 
                 <h4 class="countryData__capital">Capital: <%= element['capital'] %></h4>
                 
-                <p><%= element['name'].common %> is in <%= element['subregion'] %>, <%= element['region'] %>.
+                <p class="countryData__paragraph">
+                <%= element['name'].common %> is in <%= element['subregion'] %>, <%= element['region'] %>.
                 It's population consists of <%= element['population'] %> people. It is <%= element['area'] %>km2 large.
-                Car license plates are indicated with <%= element['car'].signs %> and usually people drive on the <%= element['car'].side %> side of the road.</p>
-
+                Car license plates are indicated with <%= element['car'].signs %> and usually people drive on the <%= element['car'].side %> side of the road.
+                <br>
                     <% if (element['independent']) { %>
-                        <div class="countryData__independent"><%= element['name'].common %> is independent</div>
+                        <%= element['name'].common %> is independent.
                     <% } else { %>
-                    <div class="countryData__independent"><%= element['name'].common %> is occupied</div>
+                        <%= element['name'].common %> is occupied.
                     <% } %>
+                </p>
+            </div>
             <% }) %>
+        </section>
 
+        
 
         <% } else if (locals.data) { %>
-            <section id="cards" class=""></section>
-            <% const countryNameArray = [] %>
+          
+          <!-- Main page -->
+          
+            <section id="cards" class="countriesDisplayMain__section">
+            <div class="countriesDisplayMain__grid">
+                <% const countryNameArray = [] %>
             <% locals.data.forEach((element) => { %>
                 <% countryNameArray.push(element['name'].common) %>
            <%  }) %>
            <% countryNameArray.sort() %>
            <% countryNameArray.forEach((element) => { %>
-            <a href="/country?name=<%= element %>" class="countryName"><%= element %></a>
+            <a href="/country?name=<%= element %>" class="countryName">
+                <div><%= element %></div>
+            </a>
            <% }) %>
             <% } %>
+        </div>
         </section>
 </body>
 </html>
