@@ -11,7 +11,7 @@
 <body>
     <header class="header">
         <a href="/"><button href="/" class="button__">Countries</button></a>
-        <img src="svg/stats.svg" alt="Caligraphy style logo">
+        <img src="./svg/stats.svg" alt="Caligraphy style logo">
         <a href="/countries"><button class="button__">Charts</button></a>
     </header>
     
@@ -24,7 +24,7 @@
 
                 <!-- Chart route page -->
 
-        <h2><%= countriesMain %></h2>
+        <h2 class="reroute__title"><%= countriesMain %></h2>
         <form action="/countries/charts" class="form" method="post">
         <select name="fields" id="" class="endPoint__dropdown">
             <option name ="" class="dropdown__choice"></option>
@@ -90,10 +90,9 @@
         
         
         <%} else if (locals.countryData) { %>
-    
             <!-- // Chosen country template -->
-        
-        <section id="cards" class="template__cards">
+             <% try { %>
+                <section id="cards" class="template__cards">
             
             <% countryData.forEach((element) => { %>
                 
@@ -103,23 +102,33 @@
                     <h5 class="countryData__flagInitials"><%= element['flag'] %></h5>
                     <h5 class="countryData__timeZone">Timezone: <%= element['timezones'] %></h5>
                     <div class="countryData__currency">Currency:
+
                         
-                        <% const currencyArr = Object.entries(element['currencies']) %>
-                        <% currencyArr.forEach((currencyElement) => { %>
+                            <% const currencyArr = Object.entries(element['currencies']) %>
+                            <% currencyArr.forEach((currencyElement) => { %>
+                            <div>
                             <div><%= currencyElement[0] %></div>
                             <div><%= currencyElement[1].name %></div>
                             <div><%= currencyElement[1].symbol %></div>
+                            </div>
                         <% }) %>
+                        
+
+                        
+                        
                         </div>
                     
-                    <div class="countryData__languages">Languages:
+                        
+
+                    <div class="countryData__languages">Languages:</div>
                         <% const langArr = Object.values(element['languages']) %>
                         <% langArr.forEach((langElement) => { %>
                             <div><%= langElement %></div>
                             <% }) %>
                     </div>
                 </div>
-
+            
+            <div class="countryData__displayInfo-wrap">
             <div class="countryData__displayInfo">
                 
                 <h2 class="countryData__name"><%= element['name'].common %></h2>
@@ -140,8 +149,14 @@
                     <% } %>
                 </p>
             </div>
+        </div>
             <% }) %>
         </section>
+             <% } catch (error) { %>
+                <img src="/img/index.png" alt="error handler">
+             <% } %>
+        
+        
 
         
 

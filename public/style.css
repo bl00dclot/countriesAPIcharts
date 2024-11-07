@@ -112,10 +112,12 @@ body {
 }
 
 .countryData__displayBox {
+    padding: 10px;
     display: flex;
-}
-countryData__displayInfo {
-    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
 
 .countryData__flags {
@@ -123,11 +125,11 @@ countryData__displayInfo {
 }
 
 .countryData__coatOfArms {
-    width: 300px;
+    width: 200px;
 }
 
 .countryData__flagInitials {
-
+    text-align: center;
 }
 
 .countryData__timeZone {
@@ -135,15 +137,34 @@ countryData__displayInfo {
 }
 
 .countryData__currency {
-
+    text-align: center;
+}
+.countryData__currency > div > div {
+    display: inline;
 }
 
 .countryData__languages {
-
+    display: inline;
+}
+.countryData__languages > div {
+    display: inline;
+}
+.countryData__displayInfo-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.countryData__displayInfo {
+    width: 75%;
+    display:flex;
+    justify-content: first baseline;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .countryData__name {
-
+    font-size: 3rem;
 }
 
 .countryData__official {
@@ -155,5 +176,42 @@ countryData__displayInfo {
 }
 
 .countryData__paragraph {
+    text-align: center;
+    word-spacing: 0.175rem;
+    letter-spacing: 0.075rem;
+}
 
+
+
+                    /* ReRoute page */
+
+
+.reroute__title {
+    text-align: center;
+    font-size: 3rem;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+.endPoint__dropdown {
+    display: block;
+    text-align: center;
+    width: 10rem;
+    height: 2rem;
+}
+
+.form__submit {
+    border-bottom: solid 1px #000;
+    padding: 10PX;
+    transition: all 0.4s;
+    font-weight: 600;
+}
+
+.form__submit:hover, .form__submit:focus {
+    transform: scale(1.2);
 }
